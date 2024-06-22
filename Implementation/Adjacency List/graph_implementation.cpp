@@ -2,6 +2,7 @@
 #include<vector>
 #include<unordered_set>
 #include<queue>
+#include<stack>
 #include<unordered_map>
 
 using namespace std;
@@ -71,7 +72,50 @@ class Graph
                         visited.insert(connected_vertex);
                     }
                 }
+                q.pop();
             }
+        }
+
+        void find_shortest_path(int source, int destination)
+        {
+            queue<int> q;
+            unordered_set<int> visited;
+            q.push(source);
+            visited.insert(source);
+            unordered_map<int, int> path;
+            stack<int> s;
+
+            while(!q.empty())
+            {
+                int element = q.front();
+                int v1 = element;
+                for(int i=0; i<this->adj_list[element].size(); i++)
+                {
+                    int connected_vertex = this->adj_list[element][i];
+                    int v2 = connected_vertex;
+                    if(visited.find(connected_vertex) == visited.end())
+                    {
+                        path[connected_vertex] = v1;
+                        cout<<connected_vertex<<" ";
+                        q.push(connected_vertex);
+                        visited.insert(connected_vertex);
+                    }
+                }
+                q.pop();
+            }
+
+            int temp = destination;
+            while(temp!=source)
+            {
+                s.push(temp);
+                temp = path[temp];
+            }
+
+            for(auto i : s)
+            {
+                cout<<i<<"->";
+            }
+            cout<<endl;
         }
 };
 
@@ -82,15 +126,13 @@ int main()
     cin>>v;
     Graph graph(v);
     graph.createGraph();
-    graph.print();
-    
+    // graph.print();
+    cout<<"Enter the source vertex"<<endl;
+    int source;
+    cin>>source;
+    cout<<"Enter the destination vertex"<<endl;
+    int destination;
+    cin>>destination;
     while(1)
-    {
-        int source;
-        cout<<"On which vertex you want to apply bfs? : "<<endl;
-        cin>>source;
-        graph.bfs(source);
-        cout<<endl<<endl;
-    }
-    
+        graph.find_shortest_path(source, destination);
 }
