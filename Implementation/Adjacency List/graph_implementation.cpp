@@ -111,9 +111,11 @@ class Graph
                 temp = path[temp];
             }
 
-            for(auto i : s)
+            while(s.empty())
             {
+                int i = s.top();
                 cout<<i<<"->";
+                s.pop();
             }
             cout<<endl;
         }
