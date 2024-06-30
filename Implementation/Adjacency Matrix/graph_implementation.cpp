@@ -80,6 +80,12 @@ class Graph
             }
             cout<<endl;
         }
+
+
+        void rfs()
+        {
+            cout<<"--------------------------------"<<endl;
+        }
 };
 
 int main()
